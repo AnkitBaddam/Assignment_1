@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Assignment_1
 {
@@ -63,8 +64,13 @@ namespace Assignment_1
         {
             try
             {
+                int len = s.Length;
+                if (len > 10000)// Given Contraint
+                {
+                    Console.WriteLine("Lenght of input string should be less than " + len);
+                }
                 String final_string = "";
-                //searching for each charecter in the given string, eliminate the vowels and print the new string without the vowels
+                //looking for character a in the given string ,replacing the vowels in them in "final_string".
                 foreach (char a in s)
                 {
                     if (a != 'a' & a != 'e' & a != 'i' & a != 'o' & a != 'u' & a != 'A' & a != 'E' & a != 'I' & a != 'O' & a != 'U')
@@ -106,27 +112,37 @@ namespace Assignment_1
         {
             try
             {
-                int S = 0;
-                int L = bull_bucks.Length;
-                //using foreach to pick each integer in the array.
+                int S = 0; // Sum variable
+                int L = bull_bucks.Length; //length of array
+                if (L < 1 || L > 100) // Constraint check for Length
+                {
+                    System.Environment.Exit(1);
+                }
+
+                //using foreach to choose each integer in the array.
                 foreach (int a in bull_bucks)
                 {
+                    if(a < 1 || a > 100) //Constraint check for values
+                    {
+                        System.Environment.Exit(1);
+                    }
                     int count = 0;
                     //for loop inside foreach to compare the integers and overwriting the value of "count" if they are equal.
                     for (int i = 0; i < L; i++)
                     {
-                        if (a == bull_bucks[i])
+                        if (a == bull_bucks[i]) // Checking for the unique values and adding them to count  
                         {
                             count = count + 1;
                         }
                     }
-                    //"count" value will be 1 when the integers are not equal. so sum of unique values from above forloop are added to "sum" and the final value is given.
+                    //"count" will be 1 when the integers are not same.
+
                     if (count == 1)
                     {
                         S = S + a;
                     }
                 }
-                return sum;
+                return S;
 
             }
             catch (Exception)
@@ -141,11 +157,11 @@ namespace Assignment_1
                 int k = bulls_grid.Length;
                 //sqaure root of total length of array will be the matrix
                 int n = Convert.ToInt32(Math.Sqrt(k));
-                int sum = 0;
+                int sum = 0; //Initialising the sum to zero
                 //
                 for (int i = 0; i < n; i++)
                 {
-                    sum = sum + bulls_grid[i, i] + bulls_grid[i, n - i - 1];
+                    sum = sum + bulls_grid[i, i] + bulls_grid[i, n - i - 1]; //Calculating the sum of the diagonal elements
                 }
                 if (n % 2 != 0)
                 {
@@ -169,13 +185,39 @@ namespace Assignment_1
         {
             try
             {
+                int len = indices.Length;
+                if (len > 100)//user defined constraints
+                {
+                    Console.WriteLine("Lenght of input string should be less than " + len);
+                }
+                if (bulls_string.Length != indices.Length)//user defined condition
+                {
+                    Console.WriteLine("Indices length and bull_string length are not same");
+                }
+                if (bulls_string.Any(char.IsUpper))//user defined exceptions
+                {
+                    Console.WriteLine("Input string contains Upper case letter");
+                }
+                if (indices.Distinct().Count() != indices.Length)//user defined exceptions
+                {
+                    Console.WriteLine("All the values in indices array should be unique");
+                }
+                foreach (int i in indices)
+                {
+                    if (i > bulls_string.Length)
+                    {
+                        Console.WriteLine("Value in indices is exceeding the number of characters in the string");
+                    }
+                }
                 string[] x = new string[bulls_string.Length];
                 string z = "";
+                //considering the integers of indices array and using them as index values and comparing them with "bulls_string"
                 for (int i = 0; i < bulls_string.Length; i++)
                 {
                     int y = indices[i];
                     x[y] = Convert.ToString(bulls_string[i]);
                 }
+                // Converting the array to string and returnig it
                 for (int i = 0; i < bulls_string.Length; i++)
                 {
                     z = z + x[i];
@@ -193,7 +235,17 @@ namespace Assignment_1
         {
             try
             {
+                int len = bulls_string6.Length;
+                if (bulls_string6.Any(char.IsUpper))//user defined Constraint
+                {
+                    Console.WriteLine("Input string contains Upper case letter");
+                }
+                if (len > 250)//user defined exceptions
+                {
+                    Console.WriteLine("Lenght of input string should be less than " + len);
+                }
                 string[] x = new string[bulls_string6.Length];
+                //splitting the given string using for loop and if loop.
                 for (int i = 0; i < bulls_string6.Length; i++)
                 {
                     if (bulls_string6[i] == ch)
@@ -202,10 +254,12 @@ namespace Assignment_1
                     }
                 }
                 string y = "";
+                // using the loop and storing in the reverse in string "y"
                 for (int j = x[0].Length - 1; j >= 0; j--)
                 {
                     y = y + bulls_string6[j];
                 }
+                //joining likewise to get the output
                 string prefix_string = ch + y + x[1];
                 return prefix_string;
             }
@@ -215,9 +269,6 @@ namespace Assignment_1
                 throw;
             }
 
-        }
-    }
-}
         }
     }
 }
